@@ -129,7 +129,7 @@ html {
         .navbar .rhs .affiliateBtn, .navbar .rhs .loginBtn {
             background-color: transparent;
             padding: 6px;
-            color: #333;
+            color: #009a31;
         }
 
             .navbar .rhs .affiliateBtn:hover, .navbar .rhs .loginBtn:hover {
