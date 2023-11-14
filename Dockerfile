@@ -9,14 +9,14 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 COPY . .
-RUN dotnet restore "./Dees.Travels.Apis.Server/Dees.Travels.Apis.Server.csproj"
+RUN dotnet restore "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj"
 
-RUN dotnet build "./Dees.Travels.Apis.Server/Dees.Travels.Apis.Server.csproj" -c Release -o /app/build
+RUN dotnet build "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "./Dees.Travels.Apis.Server/Dees.Travels.Apis.Server.csproj" -c Release -o /app/publish
+RUN dotnet publish "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Dees.Travels.Apis.Server.dll"]
+ENTRYPOINT ["dotnet", "Dees.Identity.Web.Server.dll"]

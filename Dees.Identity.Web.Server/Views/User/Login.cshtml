@@ -1,0 +1,84 @@
+﻿@model LoginViewModel;
+
+
+<div class="pageContainer">
+
+    <div class="row">
+        @{
+            ViewData["Title"] = "Login";
+        }
+
+        <div class="contentContainer">
+            <div class="content">
+                <div class="logoImage">
+                    <img src="/images/logo.png" height="32" />
+                </div>
+
+                <div class="topArea">
+                    <h1>Log in <span>to your account</span></h1>
+                    <p>
+                        Don&apos;t have an account?
+                        <a href="https://deestravels.com/user/b2c-registration">
+                            <span>Sign up here</span>
+                        </a>
+                    </p>
+
+                    @if (ViewData["Error"] is not null)
+                    {
+                        <span class="globalErrorMsg">@ViewData["Error"]</span>
+                    }
+                </div>
+
+                <form method="post" action="/user/login" onsubmit="flagExecutionState">
+                    <div class="formFieldContainer">
+                        <input asp-for="Email" placeholder="Enter your email" />
+                        <span asp-validation-for="Email" class="errorMsg"></span>
+                    </div>
+
+                    <div class="formFieldContainer">
+                        <input type="password" asp-for="Password" placeholder="Enter your password" />
+                        <span asp-validation-for="Password" class="errorMsg"></span>
+                    </div>
+
+                    <div class="otherOptions">
+                        <div class="rememberPassword">
+                            <input type="hidden" asp-for="ReturnUrl" />
+                            <input type="checkbox" asp-for="IsPersistent" />
+                            <span>
+                                <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.00015 10.1701L2.53015 6.70008C2.34317 6.5131 2.08957 6.40806 1.82515 6.40806C1.56072 6.40806 1.30712 6.5131 1.12015 6.70008C0.933168 6.88705 0.828125 7.14065 0.828125 7.40508C0.828125 7.53601 0.853914 7.66566 0.904019 7.78662C0.954124 7.90758 1.02756 8.01749 1.12015 8.11008L5.30015 12.2901C5.69015 12.6801 6.32015 12.6801 6.71015 12.2901L17.2901 1.71008C17.4771 1.5231 17.5822 1.2695 17.5822 1.00508C17.5822 0.740651 17.4771 0.487055 17.2901 0.300077C17.1032 0.1131 16.8496 0.00805664 16.5851 0.00805664C16.3207 0.00805664 16.0671 0.1131 15.8801 0.300077L6.00015 10.1701Z" fill="white" />
+                                </svg>
+                            </span>
+                            <p>Remember Password</p>
+                        </div>
+                        <div class="forgotPassword">
+                            <a asp-area="" asp-controller="User" asp-action="ForgotPassword">
+                                <p>
+                                    Forgot Password?
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <button class="loginBtn">
+                        <div id="actionLabel">Log in</div>
+                        <span id="spinnerElement" class="hide">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22C13.1046 22 14 21.1046 14 20C14 18.8954 13.1046 18 12 18C10.8954 18 10 18.8954 10 20C10 21.1046 10.8954 22 12 22Z" fill="black" />
+                                <path d="M12 6C13.1046 6 14 5.10457 14 4C14 2.89543 13.1046 2 12 2C10.8954 2 10 2.89543 10 4C10 5.10457 10.8954 6 12 6Z" fill="black" fill-opacity="0.4" />
+                                <path d="M6.34375 19.657C7.44832 19.657 8.34375 18.7616 8.34375 17.657C8.34375 16.5524 7.44832 15.657 6.34375 15.657C5.23918 15.657 4.34375 16.5524 4.34375 17.657C4.34375 18.7616 5.23918 19.657 6.34375 19.657Z" fill="black" fill-opacity="0.1" />
+                                <path d="M17.6562 8.34302C18.7608 8.34302 19.6562 7.44759 19.6562 6.34302C19.6562 5.23845 18.7608 4.34302 17.6562 4.34302C16.5517 4.34302 15.6562 5.23845 15.6562 6.34302C15.6562 7.44759 16.5517 8.34302 17.6562 8.34302Z" fill="black" fill-opacity="0.5" />
+                                <path d="M4.001 14.001C5.10612 14.001 6.002 13.1051 6.002 12C6.002 10.8949 5.10612 9.99902 4.001 9.99902C2.89588 9.99902 2 10.8949 2 12C2 13.1051 2.89588 14.001 4.001 14.001Z" fill="black" fill-opacity="0.3" />
+                                <path d="M20 14C21.1046 14 22 13.1046 22 12C22 10.8954 21.1046 10 20 10C18.8954 10 18 10.8954 18 12C18 13.1046 18.8954 14 20 14Z" fill="black" fill-opacity="0.65" />
+                                <path d="M6.34375 8.34399C7.44832 8.34399 8.34375 7.44856 8.34375 6.34399C8.34375 5.23942 7.44832 4.34399 6.34375 4.34399C5.23918 4.34399 4.34375 5.23942 4.34375 6.34399C4.34375 7.44856 5.23918 8.34399 6.34375 8.34399Z" fill="black" fill-opacity="0.3" />
+                                <path d="M17.6562 19.658C18.7608 19.658 19.6562 18.7625 19.6562 17.658C19.6562 16.5534 18.7608 15.658 17.6562 15.658C16.5517 15.658 15.6562 16.5534 15.6562 17.658C15.6562 18.7625 16.5517 19.658 17.6562 19.658Z" fill="black" fill-opacity="0.85" />
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

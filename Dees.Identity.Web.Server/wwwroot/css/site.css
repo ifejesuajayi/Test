@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap');
+
+
+html {
+    font-size: 14px;
+    text-align: center;
+    font-family: 'Maven Pro', sans-serif !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    transition: all 300ms ease;
+}
+
+a {
+    margin: 0;
+    display: inline-flex;
+    text-decoration: none;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.loginBtn > div.hide {
+    display: none;
+}
+
+.loginBtn > span.hide {
+    display: none !important;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.container {
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+}
+
+.pageContainer {
+    min-height: 100vh;
+    background-color: #E6E6E6;
+}
+
+
+.navbar {
+    background-color: #ffffff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 12px 8%;
+    z-index: 100;
+    -webkit-box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+}
+
+    .navbar .lhs {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        gap: 80px;
+    }
+
+        .navbar .lhs ul {
+            list-style: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            gap: 16px;
+            margin: 0;
+        }
+
+            .navbar .lhs ul li {
+                cursor: pointer;
+            }
+
+                .navbar .lhs ul li:hover {
+                    color: #0D8CED;
+                }
+
+    .navbar .rhs {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        gap: 12px;
+    }
+
+        .navbar .rhs button {
+            padding: 12px 24px;
+            background-color: #0D8CED;
+            color: #ffffff;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            cursor: pointer;
+            padding: 12px 24px 14px;
+            line-height: 16px;
+        }
+
+        .navbar .rhs .affiliateBtn, .navbar .rhs .loginBtn {
+            background-color: transparent;
+            padding: 6px;
+            color: #000;
+        }
+
+            .navbar .rhs .affiliateBtn:hover, .navbar .rhs .loginBtn:hover {
+                color: #0D8CED;
+            }
+
+
+
+footer {
+    width: 100%;
+    position: fixed;
+    display: none;
+}
+
+    footer .container {
+        padding: 20px 0px;
+    }
+
+
+
+.contentContainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-top: 20vh;
+    padding-bottom: 100px;
+}
+
+    .contentContainer .content {
+        margin: auto;
+        padding: 40px 32px 32px;
+        background-color: #ffffff;
+        max-width: 400px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        gap: 16px;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-shadow: 0px 12px 11px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 12px 11px rgba(0, 0, 0, 0.1);
+        border-radius: 24px;
+    }
+
+
+        .contentContainer .content .logoImage {
+            margin: 0 auto;
+        }
+
+        .contentContainer .content .topArea {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            width: 100%
+        }
+
+            .contentContainer .content .topArea .globalErrorMsg {
+                padding: 8px;
+                background-color: #fff0f3;
+                border: 1px solid #ffe1e7;
+                margin-top: 8px;
+                border-radius: 8px;
+            }
+
+            .contentContainer .content .topArea .globalSuccessMsg {
+                padding: 8px;
+                background-color: #d5ffe2;
+                border: 1px solid #c4ffd7;
+                margin-top: 8px;
+                border-radius: 8px;
+                color: #009a31;
+            }
+
+            .contentContainer .content .topArea h3 {
+                font-size: 20px;
+            }
+
+            .contentContainer .content .topArea span {
+                color: #013672;
+                font-weight: 500;
+            }
+
+        .contentContainer .content form {
+            width: 100%;
+            min-width: 350px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+            .contentContainer .content form .formRowContainer {
+                display: flex;
+                gap: 16px;
+            }
+
+            .contentContainer .content form .formFieldContainer {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                gap: 4px;
+                width: 100%;
+            }
+
+                .contentContainer .content form .formFieldContainer .errorMsg {
+                    color: crimson;
+                    font-size: 12px;
+                    text-align: left;
+                }
+
+            .contentContainer .content form .formRowContainer .phoneSelectionField {
+                flex-basis: 30%;
+            }
+
+            .contentContainer .content form .formRowContainer .phoneTextInputField {
+                flex-basis: 70%;
+            }
+
+            .contentContainer .content form .formFieldContainer label {
+                font-size: 14px;
+                text-align: left;
+            }
+
+            .contentContainer .content form .formFieldContainer input, select {
+                padding: 14px;
+                background-color: rgba(0, 0, 0, 0.08);
+                background-color: #E0E1EF;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+            }
+
+            .contentContainer .content form .otherOptions {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .contentContainer .content form button span {
+                width: 16px;
+                height: 16px;
+                aspect-ratio: 1;
+                display: block;
+                background-color: transparent;
+                margin: 0 auto;
+                border-radius: 100%;
+                transform: scale(1.75);
+            }
+
+                .contentContainer .content form button span svg {
+                    width: 100%;
+                    height: 100%;
+                    aspect-ratio: 1;
+                    animation: spinnerAnim 1000ms linear infinite;
+                }
+
+@keyframes spinnerAnim {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.contentContainer .content form button span svg path {
+    fill: #ffffff;
+}
+
+.contentContainer .content form .otherOptions .rememberPassword {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    gap: 4px;
+}
+
+    .contentContainer .content form .otherOptions .rememberPassword input[type=checkbox] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .contentContainer .content form .otherOptions .rememberPassword > span {
+        width: 16px;
+        height: 16px;
+        border: 1px solid #000;
+        border-radius: 3px;
+        display: grid;
+        place-items: center;
+    }
+
+        .contentContainer .content form .otherOptions .rememberPassword > span svg {
+            width: 12px;
+            height: 12px;
+        }
+
+    .contentContainer .content form .otherOptions .rememberPassword input[type=checkbox]:checked ~ span {
+        background-color: #013672;
+        border: 1px solid #013672;
+    }
+
+.contentContainer .content form .otherOptions .forgotPassword p {
+    color: #013672;
+    cursor: pointer;
+}
+
+.contentContainer .content form button {
+    padding: 14px;
+    border-radius: 24px;
+    background-color: #013672;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.contentContainer .content .demarcation {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+    .contentContainer .content .demarcation span {
+        height: 0.5px;
+        width: 100%;
+        background-color: #013672;
+        display: block;
+    }
+
+    .contentContainer .content .demarcation p {
+        font-size: 16px;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+    }
+
+.contentContainer .content .actionButtons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+    .contentContainer .content .actionButtons button {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        gap: 6px;
+        background-color: transparent;
+        color: #222222;
+        border: 1.5px solid #0d8ced;
+        border-radius: 12px;
+        width: 100%;
+        cursor: pointer;
+        font-size: 12px;
+        padding: 12px 0px;
+        line-height: 16px;
+    }
+
+        .contentContainer .content .actionButtons button:hover {
+            background-color: #0d8ced;
+            color: #ffffff;
+        }
+
+.contentContainer .content .note {
+    font-size: 14px;
+    text-align: center;
+}
+
+    .contentContainer .content .note span {
+        color: #013672;
+        cursor: pointer;
+    }
