@@ -6,8 +6,12 @@
 trigger:
 - main
 
+#The pipeline is triggered automatically when changes are pushed to the main branch.
+
 pool:
   vmImage: 'ubuntu-latest'
+
+#The pipeline runs on a Ubuntu agent (ubuntu-latest), which is a virtual machine that executes the tasks defined in the pipeline.
 
 variables:
   solution: '**/*.sln'
@@ -15,14 +19,24 @@ variables:
   buildConfiguration: 'Release'
   dockerRegistryServiceConnection: 'Docker-Login'
 
+
+#solution: Specifies the location of the solution file.
+#buildPlatform: Specifies the build platform (Any CPU).
+#buildConfiguration: Specifies the build configuration (Release).
+#dockerRegistryServiceConnection: Refers to the Docker service connection in Azure DevOps, allowing authentication to a Docker registry.
+
 steps:
 - task: NuGetToolInstaller@1
   displayName: 'Install NuGet CLI'
+
+#Installs the NuGet command-line interface, which is used to manage .NET packages.
 
 - task: NuGetCommand@2
   displayName: 'Restore NuGet Packages'
   inputs:
     restoreSolution: '$(solution)'
+  
+#Restores the NuGet packages for the solution.
 
 - task: DotNetCoreCLI@2
   displayName: 'Build Solution'
@@ -30,6 +44,8 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
+
+#Builds the ASP.NET Core solution using the specified build configuration.
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Unit Tests'
@@ -39,12 +55,16 @@ steps:
     arguments: '--configuration  $(BuildConfiguration)'
     testRunTitle: 'Unit-Test'
 
+#Executes unit tests within the solution.
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish Artifacts'
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  
+#Publishes the build artifacts, which typically include the compiled binaries and other necessary files, to a staging directory.
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
@@ -52,11 +72,15 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
 
+#Publishes the build artifacts to Azure DevOps, making them available for later stages or deployments.
+
 - task: Docker@2
   displayName: 'Docker Login'
   inputs:
     containerRegistry: '$(dockerRegistryServiceConnection)'
     command: 'login'
+  
+#Authenticates with the Docker registry using the Docker service connection credentials.
 
 - task: Docker@2
   displayName: 'Docker build and push'
@@ -65,4 +89,7 @@ steps:
     repository: 'ifejesuaj/test-dees'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+  
+#Builds a Docker image using the specified Dockerfile (**/Dockerfile).
+#Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
