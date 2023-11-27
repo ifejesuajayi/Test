@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerImageName: 'ifejesuaj/test-dees'
+  dockerImageName: 'ifejesuaj/test-dees:latest'
   dockerRegistryServiceConnection: 'Docker-Login'
 
 steps:
@@ -63,7 +63,7 @@ steps:
   displayName: 'Build and Push Docker Image'
   inputs:
     command: 'buildAndPush'
-    repository: '***/test-dees'
+    repository: '$(dockerImageName)' 
     dockerfile: '**/Dockerfile'
     buildContext: '$(Build.ArtifactStagingDirectory)'
     containerRegistry: '$(dockerRegistryServiceConnection)'
