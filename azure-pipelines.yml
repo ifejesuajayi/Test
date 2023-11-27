@@ -16,18 +16,22 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: 'Install NuGet CLI'
 
 - task: NuGetCommand@2
+  displayName: 'Restore NuGet Packages'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Build Solution'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run Unit Tests'
   inputs:
     command: 'test'
     projects: '**/*[Tt]est/*.csproj'
@@ -35,20 +39,14 @@ steps:
     testRunTitle: 'Unit-Test'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish Artifacts'
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      Get-ChildItem -Path '$(Build.ArtifactStagingDirectory)' -Recurse
-
-
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Build Artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
-    publishLocation: 'Container'
