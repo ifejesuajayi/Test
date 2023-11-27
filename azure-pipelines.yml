@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerImageName: 'ifejesuaj/Test-dees:$(Build.BuildId)'
+  dockerImageName: 'ifejesuaj/test-dees:$(Build.BuildId)'
   dockerRegistryServiceConnection: 'Docker-Login'
 
 steps:
@@ -62,11 +62,11 @@ steps:
 - task: Docker@2
   displayName: 'Build and Push Docker Image'
   inputs:
-      command: 'buildAndPush'
-      repository: '$(dockerImageName)'
-      dockerfile: '**/Dockerfile'
-      buildContext: '$(Build.ArtifactStagingDirectory)'
-      containerRegistry: '$(dockerRegistryServiceConnection)'
-      tags: |
-        $(Build.BuildId)
-        latest
+    command: 'buildAndPush'
+    repository: '***/test-dees'
+    dockerfile: '**/Dockerfile'
+    buildContext: '$(Build.ArtifactStagingDirectory)'
+    containerRegistry: 'dockerhub'
+    tags: |
+      41
+      latest
