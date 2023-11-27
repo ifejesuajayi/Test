@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerImageName: 'ifejesuaj/test-dees:$(Build.BuildId)'
+  dockerImageName: 'ifejesuaj/test-dees'
   dockerRegistryServiceConnection: 'Docker-Login'
 
 steps:
