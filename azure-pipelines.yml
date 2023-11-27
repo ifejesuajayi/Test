@@ -33,3 +33,9 @@ steps:
     projects: '**/*[Tt]est/*.csproj'
     arguments: '--configuration  $(BuildConfiguration)'
     testRunTitle: 'Unit-Test'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.artifactstagingdirectory))'
