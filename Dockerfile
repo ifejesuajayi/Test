@@ -10,6 +10,7 @@ WORKDIR /src
 
 COPY . /src
 WORKDIR /src
+RUN chmod 755 obj
 RUN dotnet restore "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj"
 
 RUN dotnet build "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" -c Release -o /app/build
