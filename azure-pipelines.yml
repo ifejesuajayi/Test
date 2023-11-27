@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerImageName: 'ifejesuaj/test-dees:latest'
+  dockerImageName: 'ifejesuaj/test-dees'
   dockerRegistryServiceConnection: 'Docker-Login'
 
 steps:
@@ -67,4 +67,6 @@ steps:
     dockerfile: '**/Dockerfile'
     buildContext: '$(Build.ArtifactStagingDirectory)'
     containerRegistry: '$(dockerRegistryServiceConnection)'
+    tags: |
+      latest-$(Build.BuildId)
 
