@@ -68,5 +68,4 @@ steps:
     buildContext: '$(Build.ArtifactStagingDirectory)'
     containerRegistry: '$(dockerRegistryServiceConnection)'
     tags: |
-      41
       latest
