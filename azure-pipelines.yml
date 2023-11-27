@@ -67,5 +67,5 @@ steps:
     dockerfile: '**/Dockerfile'
     buildContext: '$(Build.ArtifactStagingDirectory)'
     containerRegistry: '$(dockerRegistryServiceConnection)'
-    tags: |
-      latest
+    tags: 'v1.0-latest'
+
