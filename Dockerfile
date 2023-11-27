@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
 COPY . /src
+USER ifejesu
 RUN dotnet restore "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj"
 
 RUN dotnet build "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" -c Release -o /app/build
