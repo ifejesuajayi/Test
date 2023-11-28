@@ -47,8 +47,8 @@ steps:
     SonarCloud: 'sonar service connection'
     organization: 'ifejesuajayi'
     scannerMode: 'MSBuild'
-    projectKey: 'ifejesuajayi'
-    projectName: 'Dees-identity-test'
+    projectKey: 'IfejesuAjayi_AZURE_DEVOPS'
+    projectName: 'AZURE_DEVOPS'
 
 #prepares sonar analysis config
 
