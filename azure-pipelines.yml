@@ -120,30 +120,3 @@ steps:
   
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
-
-- stage: Deploy
-  dependsOn: Build
-  jobs:
-  - job: Deploy
-    displayName: 'Deploy to Azure VM'
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-      - task: AzureVMImage@1
-        displayName: 'Create Azure Ubuntu VM'
-        inputs:
-          azureSubscription: 'Microsoft Partner Network'
-          resourceGroupName: 'Test-Tutorial'
-          imageName: 'ubuntu 20.04'
-          vmSize: 'Standard_D2s_v3'
-          vmName: 'Test-tutorial'
-
-      - script: sudo su
-      
-      - script: apt update
-        
-      - script: apt install nginx docker.io
-
-      - script: 'docker pull ifejesuaj/test-dees:latest'
-        displayName: 'Pull Docker Image'
-        target: 'Test-tutorial'
