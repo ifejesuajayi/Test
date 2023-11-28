@@ -124,7 +124,8 @@ steps:
     azureSubscription: 'Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az account show'
+    inlineScript: |
+      az account list
 
 
 - task: AzureCLI@2
@@ -133,4 +134,5 @@ steps:
     azureSubscription: 'Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    scriptPath: 'docker pull ifejesuaj/test-dees:latest'
+    inlineScript: |
+      'docker pull ifejesuaj/test-dees:latest'
