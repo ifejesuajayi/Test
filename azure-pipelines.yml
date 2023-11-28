@@ -1,3 +1,6 @@
+Certainly! Below is your pipeline with proper indentation:
+
+```yaml
 # ASP.NET Core (.NET Framework)
 # Build and test ASP.NET Core projects targeting the full .NET Framework.
 # Add steps that publish symbols, save build artifacts, and more:
@@ -6,12 +9,12 @@
 trigger:
 - main
 
-#The pipeline is triggered automatically when changes are pushed to the main branch.
+# The pipeline is triggered automatically when changes are pushed to the main branch.
 
 pool:
   vmImage: 'ubuntu-latest'
 
-#The pipeline runs on a Ubuntu agent (ubuntu-latest), which is a virtual machine that executes the tasks defined in the pipeline.
+# The pipeline runs on a Ubuntu agent (ubuntu-latest), which is a virtual machine that executes the tasks defined in the pipeline.
 
 variables:
   solution: '**/*.sln'
@@ -19,24 +22,23 @@ variables:
   buildConfiguration: 'Release'
   dockerRegistryServiceConnection: 'Docker-Login'
 
-
-#solution: Specifies the location of the solution file.
-#buildPlatform: Specifies the build platform (Any CPU).
-#buildConfiguration: Specifies the build configuration (Release).
-#dockerRegistryServiceConnection: Refers to the Docker service connection in Azure DevOps, allowing authentication to a Docker registry.
+# solution: Specifies the location of the solution file.
+# buildPlatform: Specifies the build platform (Any CPU).
+# buildConfiguration: Specifies the build configuration (Release).
+# dockerRegistryServiceConnection: Refers to the Docker service connection in Azure DevOps, allowing authentication to a Docker registry.
 
 steps:
 - task: NuGetToolInstaller@1
   displayName: 'Install NuGet CLI'
 
-#Installs the NuGet command-line interface, which is used to manage .NET packages.
+# Installs the NuGet command-line interface, which is used to manage .NET packages.
 
 - task: NuGetCommand@2
   displayName: 'Restore NuGet Packages'
   inputs:
     restoreSolution: '$(solution)'
   
-#Restores the NuGet packages for the solution.
+# Restores the NuGet packages for the solution.
 
 - task: PowerShell@2
   inputs:
@@ -50,7 +52,7 @@ steps:
     projectKey: 'IfejesuAjayi_AZURE_DEVOPS'
     projectName: 'AZURE_DEVOPS'
 
-#prepares sonar analysis config
+# Prepares sonar analysis config
 
 - task: DotNetCoreCLI@2
   displayName: 'Build Solution'
@@ -59,7 +61,7 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
-#Builds the ASP.NET Core solution using the specified build configuration.
+# Builds the ASP.NET Core solution using the specified build configuration.
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Unit Tests'
@@ -69,7 +71,7 @@ steps:
     arguments: '--configuration  $(BuildConfiguration)'
     testRunTitle: 'Unit-Test'
 
-#Executes unit tests within the solution.
+# Executes unit tests within the solution.
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish Artifacts'
@@ -78,20 +80,19 @@ steps:
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
   
-#Publishes the build artifacts, which typically include the compiled binaries and other necessary files, to a staging directory.
+# Publishes the build artifacts, which typically include the compiled binaries and other necessary files, to a staging directory.
 
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
 
-#publish sonarcloud's quality gate result on the azure pipeline result
+# Publish sonarcloud's quality gate result on the Azure pipeline result
 
 - task: SonarCloudAnalyze@1
   inputs:
     jdkversion: 'JAVA_HOME_17_X64'
 
-#run scanner and upload the results to the sonarcloud
-
+# Run scanner and upload the results to SonarCloud
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Build Artifacts'
@@ -99,7 +100,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
 
-#Publishes the build artifacts to Azure DevOps, making them available for later stages or deployments.
+# Publishes the build artifacts to Azure DevOps, making them available for later stages or deployments.
 
 - task: Docker@2
   displayName: 'Docker Login'
@@ -107,7 +108,7 @@ steps:
     containerRegistry: '$(dockerRegistryServiceConnection)'
     command: 'login'
   
-#Authenticates with the Docker registry using the Docker service connection credentials.
+# Authenticates with the Docker registry using the Docker service connection credentials.
 
 - task: Docker@2
   displayName: 'Docker build and push'
@@ -117,6 +118,32 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
   
-#Builds a Docker image using the specified Dockerfile (**/Dockerfile).
-#Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
+# Builds a Docker image using the specified Dockerfile (**/Dockerfile).
+# Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
+- stage: Deploy
+  dependsOn: Build
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy to Azure VM'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: AzureVMImage@1
+        displayName: 'Create Azure Ubuntu VM'
+        inputs:
+          azureSubscription: 'Microsoft Partner Network'
+          resourceGroupName: 'Test-Tutorial'
+          imageName: 'ubuntu 20.04'
+          vmSize: 'Standard_D2s_v3'
+          vmName: 'Test-tutorial'
+
+      - script: sudo su
+      
+      - script: apt update
+        
+      - script: apt install nginx docker.io
+
+      - script: 'docker pull ifejesuaj/test-dees:latest'
+        displayName: 'Pull Docker Image'
+        target: 'Test-tutorial'
