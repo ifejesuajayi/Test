@@ -135,4 +135,4 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      'docker pull ifejesuaj/test-dees:latest'
+      'docker pull ifejesuaj/test-dees'
