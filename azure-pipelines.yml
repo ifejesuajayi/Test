@@ -113,7 +113,7 @@ steps:
   displayName: 'Docker build and push'
   inputs:
     containerRegistry: '$(dockerRegistryServiceConnection)'
-    repository: 'ifejesuaj/test-dees:$(build.buildNumber)'
+    repository: 'ifejesuaj/test-dees'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
   
