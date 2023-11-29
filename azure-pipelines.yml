@@ -119,14 +119,22 @@ steps:
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
 
+
+
 - task: AzureCLI@2
-  displayName: 'Azure Test'
+  displayName: 'Login to Azure VM'
   inputs:
     azureSubscription: 'Test-Tutorial Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      echo "Hello World"
-      hostname
-
+      # Variables
+      resourceGroupName='Test-Tutorial'
+      vmName='Test-Tutorial'
+      
+      # Get Public IP address of the VM
+      ipAddress=$(az vm show --resource-group $resourceGroupName --name $vmName --show-details --query publicIps --output tsv)
+      
+      # SSH into the VM
+      ssh Test-Tutorial@$ipAddress
 
