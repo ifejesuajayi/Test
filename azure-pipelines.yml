@@ -125,22 +125,8 @@ steps:
     azureSubscription: 'Test-Tutorial Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: 'echo "Hello World"'
+    inlineScript: |
+      echo "Hello World"
+      docker ps
 
 
-- task: AzureCLI@2
-  displayName: 'Azure CLI Login'
-  inputs:
-    azureSubscription: 'Test-Tutorial Azure resource manager'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: | 
-      # Variables
-      resourceGroupName='Test-Tutorial'
-      vmName='Test-Tutorial'
-      
-      # Get Public IP address of the VM
-      ipAddress=$(az vm show --resource-group $resourceGroupName --name $vmName --show-details --query publicIps --output tsv)
-      
-      # SSH into the VM
-      ssh test-tutorial@$ipAddress
