@@ -118,21 +118,10 @@ steps:
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
-- task: AzureCLI@2
-  displayName: 'Azure CLI Login'
-  inputs:
-    azureSubscription: 'Azure resource manager'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az account list
-
 
 - task: AzureCLI@2
-  displayName: 'Azure CLI - Pull Docker Image'
   inputs:
-    azureSubscription: 'Azure resource manager'
+    azureSubscription: 'Test-Tutorial Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
-    inlineScript: |
-      'docker pull ifejesuaj/test-dees'
+    inlineScript: 'echo "Hello World"'
