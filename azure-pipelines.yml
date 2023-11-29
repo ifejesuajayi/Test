@@ -120,8 +120,17 @@ steps:
 
 
 - task: AzureCLI@2
+  displayName: 'Azure Test'
   inputs:
     azureSubscription: 'Test-Tutorial Azure resource manager'
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: 'echo "Hello World"'
+
+- task: AzureCLI@2
+  displayName: 'Azure CLI Login'
+  inputs:
+    azureSubscription: 'Test-Tutorial Azure resource manager'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az account show'
