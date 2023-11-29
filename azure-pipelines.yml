@@ -127,6 +127,6 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       echo "Hello World"
-      docker ps
+      docker images
 
 
