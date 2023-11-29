@@ -134,3 +134,15 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: 'az account show'
+  
+- task: AzureCLI@2
+  displayName: 'Azure CLI Login'
+  inputs:
+    azureSubscription: 'Test-Tutorial Azure resource manager'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: | 
+      az account set --subscription 642b15e6-a839-4e2e-94d3-989a53fa3d69
+      az vm list-ip-addresses --resource-group Test-Tutorial --name Test-Tutorial --output json | jq -r '.[].ipAddress'
+      az vm ssh --resource-group Test-Tutorial --name Test-Tutorial --public-ip-address 20.55.81.115
+
