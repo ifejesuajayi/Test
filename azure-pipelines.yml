@@ -127,3 +127,13 @@ steps:
 #    Dockerfile: '**/Dockerfile'
 #    tags: 'latest'
 
+
+- task: ACRTask@0
+  inputs:
+    azureSubscription: 'Test-Tutorial Azure resource manager'
+    azureContainerRegistry: 'Testtutt'
+    containerRepository: 'Test-dees'
+    contextType: 'file'
+    contextPath: '$(System.DefaultWorkingDirectory)'
+    dockerfileOrTaskFile: 'Dockerfile'
+    tags: 
