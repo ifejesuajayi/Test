@@ -99,13 +99,13 @@ steps:
 
 # Publishes the build artifacts to Azure DevOps, making them available for later stages or deployments.
 
-- task: Docker@2
-  displayName: 'Docker Login'
-  inputs:
-    containerRegistry: '$(dockerRegistryServiceConnection)'
-    command: 'login'
+#- task: Docker@2
+#  displayName: 'Docker Login'
+#  inputs:
+#    containerRegistry: '$(dockerRegistryServiceConnection)'
+#    command: 'login'
   
-# Authenticates with the Docker registry using the Docker service connection credentials.
+# Authenticates with the Docker registry using the DockerHub or ACR service connection credentials.
 
 #- task: Docker@2
 # displayName: 'Docker build and push'
@@ -118,14 +118,6 @@ steps:
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
-#- task: Docker@2
-#  displayName: 'Build and push Docker image'
-#  inputs:
-#    containerRegistry: 'Azure-container-registry'  
-#    repository: 'testtutt.azurecr.io/test-dees'
-#    command: 'buildAndPush'
-#    Dockerfile: '**/Dockerfile'
-#    tags: 'latest'
 
 - task: Docker@2
   inputs:
