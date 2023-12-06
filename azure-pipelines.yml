@@ -118,4 +118,12 @@ steps:
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
+- task: Docker@2
+  displayName: 'Build and push Docker image'
+  inputs:
+    containerRegistry: 'ACR_Connection_Name'  
+    repository: 'testtutt.azurecr.io/test-dees'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
 
