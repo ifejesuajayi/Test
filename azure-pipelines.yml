@@ -121,7 +121,7 @@ steps:
 - task: Docker@2
   displayName: 'Build and push Docker image'
   inputs:
-    containerRegistry: 'Azure-container-regisrty'  
+    containerRegistry: 'Azure-container-registry'  
     repository: 'testtutt.azurecr.io/test-dees'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
