@@ -126,3 +126,14 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: $(Build.BuildId)
+
+
+- task: KubernetesManifest@1
+  inputs:
+    action: 'deploy'
+    connectionType: 'azureResourceManager'
+    azureSubscriptionConnection: 'Test-Tutorial Azure resource manager'
+    azureResourceGroup: 'Test-Tutorial'
+    kubernetesCluster: 'Test-k82'
+    namespace: 'default'
+    manifests: '1'
