@@ -118,22 +118,13 @@ steps:
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
 
-#- task: Docker@2
-#  displayName: 'Build and push Docker image'
-#  inputs:
-#    containerRegistry: 'Azure container'  
-#    repository: 'testtutt.azurecr.io/test-dees'
-#    command: 'buildAndPush'
-#    Dockerfile: '**/Dockerfile'
-#    tags: 'latest'
-
-
-- task: ACRTask@0
+- task: Docker@2
+  displayName: 'Build and push Docker image'
   inputs:
-    azureSubscription: 'Test-Tutorial Azure resource manager'
-    azureContainerRegistry: 'Testtutt'
-    containerRepository: 'Test-dees'
-    contextType: 'file'
-    contextPath: '$(System.DefaultWorkingDirectory)'
-    dockerfileOrTaskFile: 'Dockerfile'
-    tags: 
+    containerRegistry: 'Azure-container-regisrty'  
+    repository: 'testtutt.azurecr.io/test-dees'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+
+
