@@ -107,13 +107,13 @@ steps:
   
 # Authenticates with the Docker registry using the Docker service connection credentials.
 
-- task: Docker@2
-  displayName: 'Docker build and push'
-  inputs:
-    containerRegistry: '$(dockerRegistryServiceConnection)'
-    repository: 'ifejesuaj/test-dees'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+#- task: Docker@2
+# displayName: 'Docker build and push'
+#  inputs:
+#    containerRegistry: '$(dockerRegistryServiceConnection)'
+#    repository: 'ifejesuaj/test-dees'
+#    command: 'buildAndPush'
+#    Dockerfile: '**/Dockerfile'
   
 # Builds a Docker image using the specified Dockerfile (**/Dockerfile).
 # Pushes the built Docker image to the specified Docker repository (ifejesuaj/test-dees).
