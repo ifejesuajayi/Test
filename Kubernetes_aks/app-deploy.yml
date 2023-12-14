@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dees
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dees
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: dees
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: dees
+        image: testtutt.azurecr.io/test-dees:$(Build.BuildId)
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dees
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: dees
