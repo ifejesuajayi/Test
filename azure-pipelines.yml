@@ -1,19 +1,10 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
 - main
-
-# The pipeline is triggered automatically when changes are pushed to the main branch.
-
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dockerRegistryServiceConnection: 'Docker-Login'
 
 # solution: Specifies the location of the solution file.
 # buildPlatform: Specifies the build platform (Any CPU).
@@ -127,6 +118,8 @@ stages:
 - stage: Deploy
   displayName: Deploy to Dev
   dependsOn: Build
+  variables: 
+    acrsecret: k8sauth
   jobs:
   - job: Build
     displayName: Deploy to AKS
@@ -139,3 +132,26 @@ stages:
           buildType: 'current'
           artifactName: 'manifests'
           targetPath: '$(Pipeline.Workspace)/manifests'
+
+#ACR is a private regisrty which means if we're deploying to a kubernetes cluster the cluster must have
+#some credentials to be able to access the container registry and consume the image 
+     - task: KubernetesManifest@1
+       inputs:
+         action: 'createSecret'
+         connectionType: 'kubernetesServiceConnection'
+         kubernetesServiceConnection: 'K8s-cluster'
+         namespace: 'default'
+         secretType: 'dockerRegistry'
+         secretName: '${acrsecret}'
+         dockerRegistryEndpoint: 'Azure-container-registry'
+        
+     - task: KubernetesManifest@1
+       inputs:
+         action: 'deploy'
+         connectionType: 'kubernetesServiceConnection'
+         kubernetesServiceConnection: 'K8s-cluster'
+         namespace: 'default'
+         manifests: '$(Pipeline.Workspace)/manifests'
+        
+ 
+     
