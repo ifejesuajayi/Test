@@ -145,13 +145,28 @@ stages:
          secretName: 'acrsecret'
          dockerRegistryEndpoint: 'Azure-container-registry'
         
-     - task: KubernetesManifest@1
-       inputs:
-         action: 'deploy'
-         connectionType: 'kubernetesServiceConnection'
-         kubernetesServiceConnection: 'K8s-cluster'
-         namespace: 'default'
-         manifests: '$(Pipeline.Workspace)/manifests/app-deploy.yml'
+     #- task: KubernetesManifest@1
+     #  inputs:
+     #    action: 'deploy'
+     #    connectionType: 'kubernetesServiceConnection'
+     #    kubernetesServiceConnection: 'K8s-cluster'
+     #    namespace: 'default'
+     #    manifests: '$(Pipeline.Workspace)/manifests/app-deploy.yml'
         
+     - task: Kubernetes@1
+       inputs:
+          connectionType: 'Azure Resource Manager'
+          azureSubscriptionEndpoint: 'Test-Tutorial Azure resource manager'
+          azureResourceGroup: 'Test-Tutorial'
+          kubernetesCluster: 'K8s-cluster'
+          namespace: 'default'
+          command: 'apply'
+          useConfigurationFile: true
+          configuration: 'Kubernetes_aks'
+          secretType: 'dockerRegistry'
+          containerRegistryType: 'Azure Container Registry'
+          azureSubscriptionEndpointForSecrets: 'Test-Tutorial Azure resource manager'
+          azureContainerRegistry: 'testtutt.azurecr.io'
+          forceUpdate: false  
  
      
