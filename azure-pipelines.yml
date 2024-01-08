@@ -118,8 +118,8 @@ stages:
 - stage: Deploy
   displayName: Deploy to Dev
   dependsOn: Build
-  variables: 
-    acrsecret: k8sauth
+  #variables: 
+    #acrsecret: k8sauth
   jobs:
   - job: Build
     displayName: Deploy to AKS
@@ -142,7 +142,7 @@ stages:
          kubernetesServiceConnection: 'K8s-cluster'
          namespace: 'default'
          secretType: 'dockerRegistry'
-         secretName: '${acrsecret}'
+         secretName: 'acrsecret'
          dockerRegistryEndpoint: 'Azure-container-registry'
         
      - task: KubernetesManifest@1
