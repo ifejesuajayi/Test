@@ -151,7 +151,7 @@ stages:
          connectionType: 'kubernetesServiceConnection'
          kubernetesServiceConnection: 'K8s-cluster'
          namespace: 'default'
-         manifests: '$(Pipeline.Workspace)/manifests'
+         manifests: '$(Pipeline.Workspace)/manifests/app-deploy.yml'
         
  
      
