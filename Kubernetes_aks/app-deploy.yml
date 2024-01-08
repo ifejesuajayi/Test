@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: dees
-        image: testtutt.azurecr.io/test-dees:$(Build.BuildId)
+        image: testtutt.azurecr.io/test-dees
         ports:
         - containerPort: 80
         
