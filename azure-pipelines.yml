@@ -135,15 +135,15 @@ stages:
 
 #ACR is a private regisrty which means if we're deploying to a kubernetes cluster the cluster must have
 #some credentials to be able to access the container registry and consume the image 
-     - task: KubernetesManifest@1
-       inputs:
-         action: 'createSecret'
-         connectionType: 'kubernetesServiceConnection'
-         kubernetesServiceConnection: 'K8s-cluster'
-         namespace: 'default'
-         secretType: 'dockerRegistry'
-         secretName: 'acrsecret'
-         dockerRegistryEndpoint: 'Azure-container-registry'
+     #- task: KubernetesManifest@1
+     #  inputs:
+     #    action: 'createSecret'
+     #    connectionType: 'kubernetesServiceConnection'
+     #    kubernetesServiceConnection: 'K8s-cluster'
+     #    namespace: 'default'
+     #    secretType: 'dockerRegistry'
+     #    secretName: 'acrsecret'
+     #    dockerRegistryEndpoint: 'Azure-container-registry'
         
      #- task: KubernetesManifest@1
      #  inputs:
