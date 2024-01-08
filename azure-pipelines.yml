@@ -8,10 +8,6 @@ trigger:
 
 # The pipeline is triggered automatically when changes are pushed to the main branch.
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-# The pipeline runs on a Ubuntu agent (ubuntu-latest), which is a virtual machine that executes the tasks defined in the pipeline.
 
 variables:
   solution: '**/*.sln'
@@ -24,106 +20,122 @@ variables:
 # buildConfiguration: Specifies the build configuration (Release).
 # dockerRegistryServiceConnection: Refers to the Docker service connection in Azure DevOps, allowing authentication to a Docker registry.
 
-steps:
-- task: NuGetToolInstaller@1
-  displayName: 'Install NuGet CLI'
 
-# Installs the NuGet command-line interface, which is used to manage .NET packages.
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
 
-- task: NuGetCommand@2
-  displayName: 'Restore NuGet Packages'
-  inputs:
-    restoreSolution: '$(solution)'
-  
-# Restores the NuGet packages for the solution.
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet CLI'
 
-- task: PowerShell@2
-  inputs:
-    filePath: 'sonar-add-project-guid.ps1'
+    # Installs the NuGet command-line interface, which is used to manage .NET packages.
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'sonar service connection'
-    organization: 'ifejesuajayi'
-    scannerMode: 'MSBuild'
-    projectKey: 'IfejesuAjayi_AZURE_DEVOPS'
-    projectName: 'AZURE_DEVOPS'
+    - task: NuGetCommand@2
+      displayName: 'Restore NuGet Packages'
+      inputs:
+        restoreSolution: '$(solution)'
+      
+    # Restores the NuGet packages for the solution.
 
-# Prepares sonar analysis config
+    - task: PowerShell@2
+      inputs:
+        filePath: 'sonar-add-project-guid.ps1'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build Solution'
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'sonar service connection'
+        organization: 'ifejesuajayi'
+        scannerMode: 'MSBuild'
+        projectKey: 'IfejesuAjayi_AZURE_DEVOPS'
+        projectName: 'AZURE_DEVOPS'
 
-# Builds the ASP.NET Core solution using the specified build configuration.
+    # Prepares sonar analysis config
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run Unit Tests'
-  inputs:
-    command: 'test'
-    projects: '**/*[Tt]est/*.csproj'
-    arguments: '--configuration  $(BuildConfiguration)'
-    testRunTitle: 'Unit-Test'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build Solution'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(BuildConfiguration)'
 
-# Executes unit tests within the solution.
+    # Builds the ASP.NET Core solution using the specified build configuration.
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Artifacts'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-  
-# Publishes the build artifacts, which typically include the compiled binaries and other necessary files, to a staging directory.
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        projects: '**/*[Tt]est/*.csproj'
+        arguments: '--configuration  $(BuildConfiguration)'
+        testRunTitle: 'Unit-Test'
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+    # Executes unit tests within the solution.
 
-# Publish sonarcloud's quality gate result on the Azure pipeline result
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish Artifacts'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      
+    # Publishes the build artifacts, which typically include the compiled binaries and other necessary files, to a staging directory.
 
-- task: SonarCloudAnalyze@1
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
 
-# Run scanner and upload the results to SonarCloud
+    # Publish sonarcloud's quality gate result on the Azure pipeline result
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Build Artifacts'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    - task: SonarCloudAnalyze@1
+      inputs:
+        jdkversion: 'JAVA_HOME_17_X64'
 
-# Publishes the build artifacts to Azure DevOps, making them available for later stages or deployments.
+    # Run scanner and upload the results to SonarCloud
 
-
-- task: Docker@2
-  displayName: 'Push docker image to azure container registry'
-  inputs:
-    containerRegistry: 'Azure-container-registry'
-    repository: 'test-dees'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    tags: $(Build.BuildId)
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Build Artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
 
 
-- script: cat Kubernetes_aks/app-deploy.yml
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Azure-container-registry'
+        repository: 'test-dees'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: $(Build.BuildId)
 
-- task: Kubernetes@1
-  inputs:
-    connectionType: 'Azure Resource Manager'
-    azureSubscriptionEndpoint: 'Test-Tutorial Azure resource manager'
-    azureResourceGroup: 'Test-Tutorial'
-    kubernetesCluster: 'K8s-cluster'
-    namespace: 'default'
-    command: 'apply'
-    useConfigurationFile: true
-    configuration: 'Kubernetes_aks'
-    secretType: 'dockerRegistry'
-    containerRegistryType: 'Azure Container Registry'
-    azureSubscriptionEndpointForSecrets: 'Test-Tutorial Azure resource manager'
-    azureContainerRegistry: 'testtutt.azurecr.io'
-    forceUpdate: false
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)/s/Kubernetes_aks'
+        artifact: 'manifests'
+        publishLocation: 'pipeline'
+
+#CI jobs can access the repo or external resources but CD jobs shouldn't. 
+#To avoid the CD jobs accessing the repos, we take the manifests file and publish them so they can be available for other jobs
+
+
+        
+
+- stage: Deploy
+  displayName: Deploy to Dev
+  dependsOn: Build
+  jobs:
+  - job: Build
+    displayName: Deploy to AKS
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+     - task: DownloadPipelineArtifact@2
+       inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          targetPath: '$(Pipeline.Workspace)/manifests'
