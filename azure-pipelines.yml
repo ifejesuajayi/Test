@@ -101,9 +101,8 @@ stages:
         repository: 'test-dees'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: |
-             $(Build.BuildId)
-             'latest'
+        tags: '$(Build.BuildId)'
+          
 
     - task: PublishPipelineArtifact@1
       inputs:
