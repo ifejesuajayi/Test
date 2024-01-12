@@ -15,6 +15,8 @@ spec:
       containers:
       - name: dees
         image: testtutt.azurecr.io/test-dees
+      imagePullSecrets:
+      - name: acr-secret
         ports:
         - containerPort: 80
         
