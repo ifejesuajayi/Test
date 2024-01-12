@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dees
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -17,6 +18,6 @@ spec:
         image: testtutt.azurecr.io/test-dees
       imagePullSecrets:
       - name: acr-secret
-        ports:
-        - containerPort: 80
+      ports:
+          - containerPort: 80
         
