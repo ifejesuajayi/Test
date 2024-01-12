@@ -101,7 +101,7 @@ stages:
         repository: 'test-dees'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags|
+        tags: |
              $(Build.BuildId)
              'latest'
 
