@@ -119,7 +119,7 @@ stages:
   displayName: Deploy to Dev
   dependsOn: Build
   variables: 
-    secret: acrsecret
+    secret: acr-secret
   jobs:
   - job: Build
     displayName: Deploy to AKS
