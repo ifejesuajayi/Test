@@ -19,4 +19,4 @@ RUN dotnet publish "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Dees.Identity.Web.Server.dll", "--urls", "http://0.0.0.0:8080"]
+ENTRYPOINT ["dotnet", "Dees.Identity.Web.Server.dll", "--urls", "http://0.0.0.0:5050"]
