@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 5050
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
@@ -19,4 +19,4 @@ RUN dotnet publish "./Dees.Identity.Web.Server/Dees.Identity.Web.Server.csproj" 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Dees.Identity.Web.Server.dll"]
+ENTRYPOINT ["dotnet", "Dees.Identity.Web.Server.dll", "--urls", "http://0.0.0.0:8080"]
