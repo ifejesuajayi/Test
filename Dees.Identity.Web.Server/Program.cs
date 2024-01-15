@@ -59,4 +59,4 @@ app.MapControllerRoute(
 
 app.MapGet("/hello", () => "Hello World");
 
-app.Run("http://localhost:5050");
+app.Run();
