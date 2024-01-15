@@ -6,6 +6,5 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 5050
   selector:
     app: dees
